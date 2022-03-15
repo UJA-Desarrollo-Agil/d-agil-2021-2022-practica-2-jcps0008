@@ -29,21 +29,22 @@ undum.game.slideUpSpeed = 500
 /* The situations that the game can be in. Each has a unique ID. */
 undum.game.situations = {
     start: new undum.SimpleSituation(
-        "<h1>Starting Out with Undum</h1>\
-        <img src='media/games/tutorial/woodcut1.png' class='float_right'>\
-        <p>Welcome to the Undum tutorial. Undum is a tool for writing\
-        hypertext interactive fiction. It has some unique features\
-        and a visual design that encourages narrative games.</p>\
+        "<h1>La vida de Erre</h1>\
+        <img src='media/games/tutorial/foto1.jpg' class='float_right'>\
+        <p>Hace dos semanas que se sacó el carnet y su padre le habia comprado un Citroen Saxo VTS 16v.\
+		Al principio conducia bastante lento ya que nunca habia cogido un coche de gasolina y era conductor novel\
+		pero a la segunda semana empezó a conducir cada vez con más soltura y confianza.</p>\
         \
-        <p>Hypertext interactive fiction is the digital equivalent of the\
-        Choose Your Own Adventure (CYOA) books that were popular in the\
-        1980s. The story is told in chunks, and you select from a range\
-        of options to move it forward. Unlike the book form, however, the\
-        digital form gives you far more flexibility to tell rich stories\
-        and introduce more interesting game elements.</p>\
+        <p>Debido al exceso de confianza una noche despues de un par de copas decide hacer un trompo en\
+		la rotonda de su pueblo pero al no saber como hacerlo bien le da un golpe a las ruedas contra el bordillo\
+		con suerte a nadie le ha pasado nada y solo que ahora nota el volante mas duro</p>\
         \
-        <p class='transient'>Click <a href='hub'>this link to\
-        continue...</a></p>"
+		<img src='media/games/tutorial/cocheroto.jpg' class='float_right'>\
+        <p> <a href='opcicon_1'>Llevar el coche al taller y arreglarlo</a></p>\
+		\
+		\
+		\
+		<p> <a href='opcicon_2'>No llevar el coche al taller</a></p>"
     ),
 
     // NB: The 'hub' situation which is the main list of topics, is
@@ -54,12 +55,160 @@ undum.game.situations = {
     // Situation type. This is a neat approach to generate text by
     // looking it up in the HTML document. For static text that makes
     // more sense than writing it longhand.
+	
+	
+	opcicon_1: new undum.SimpleSituation(
+        "<h1>Llevar el coche al taller y arreglarlo</h1>\
+        <p>Esta parece la opcion mas madura y sensata por lo que Erre decide gastarse sus ahorros en arreglar el coche.\
+		</p>\
+		<p>Pasados unos dias los amigos de Erre van a salir de cenar y despues de fiesta pero Erre no tiene dinero ya que lo necesita para arreglar el coche\
+		y se le ocurren dos ideas:</p>\
+		<img src='media/games/tutorial/taller.jpg' class='float_right'>\
+		<p> <a href='opcicon_nofiesta'>No salir de fiesta</a></p>\
+		\
+		\
+		<p> <a href='opcicon_robar'>Cogerle dinero a su madre del cajón</a></p>\
+		",	
+        {
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable);
+                system.setQuality("experiencia", character.qualities.experiencia+50);
+				system.setQuality("dinero", character.qualities.dinero-950);
+            }
+        }
+    ),
+	
+	
+	opcicon_nofiesta: new undum.SimpleSituation(
+        "<h1>No salir de fiesta</h1>\
+		<img src='media/games/tutorial/dormir.jpg' class='float_right'>\
+        <p>Es la mejor opcion ya que tiene que asumir las consecuencias de sus actos y en muy poco tiempo tendrá su coche arreglado\
+		<\p>\
+		<p>Si has llegado hasta aquí te felicito ya que eres una persona muy inteligente y has hecho lo mejor siempre<\p>\
+		<p>Cuando erre va al taller a pagar el coche se da cuenta que lo ha pagado su padre como recompensa por su honestidad\
+		aunque al llegar a casa le recuerda que debe tener mas cuidado<\p>\
+        ",	
+        {
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable);
+                system.setQuality("experiencia", character.qualities.experiencia+50);
+				system.setQuality("dinero", character.qualities.dinero+950);
+            }
+        }
+    ),
+	
+	
+	opcicon_robar: new undum.SimpleSituation(
+        "<h1>Cogerle dinero a su madre del cajón</h1>\
+		<img src='media/games/tutorial/robar.jpg' class='float_right'>\
+        <p> Despues de cogerle dinero a tu madre tienes que escaparte de casa ya que ella sabe que no tienes dinero y no puedes salir\
+		tienes dos opciones <a href='opcicon_ventana'>salir por la ventana</a> o <a href='opcicon_puerta'>salir por la puerta</a><\p>\
+		",{
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-80);
+                system.setQuality("experiencia", character.qualities.experiencia+2);
+				system.setQuality("dinero", character.qualities.dinero+150);
+            }
+        }
+    ),
+	
+	opcicon_ventana: new undum.SimpleSituation(
+        "<h1>Salir por la ventana</h1>\
+		<img src='media/games/tutorial/ventana.jpg' class='float_right'>\
+        <p> Al saltar por la ventana aunque su venta está a apenas dos metros de altura respecto al suelo, sale muy nervioso y se dobla el tobillo\
+		ahora tiene que ir al medico y no puede salir de su casa en dos meses aunque su coche esté arreglado antes<\p>\
+		\
+		<p>Si has llegado hasta aquí tengo que decirte que no has hecho lo correcto en todos los casos ya que tienes que ser mas responsable con tus actos<\p>\
+        ",{
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-10);
+                system.setQuality("experiencia", character.qualities.experiencia+2);
+				system.setQuality("dinero", character.qualities.dinero);
+            }
+        }
+    ),
+	
+	opcicon_puerta: new undum.SimpleSituation(
+        "<h1>Salir por la puerta</h1>\
+		<img src='media/games/tutorial/puerta.jpg' class='float_right'>\
+        <p>Sale por la puerta cuando sus padres estan dormidos y no se dan cuenta por lo que pasa una noche genial pero al volver a casa \
+		hace mucho ruido al abrir la puerta y despierta a sus padres. Su padre baja asustado pensando que han entrado a robar pero al encender la luz y ver Erre\
+		le regaña muchisimo y lo cstiga durante dos semana<\p>\
+		\
+		<p>Si has llegado hasta aquí tengo que decirte que no has hecho lo correcto en todos los casos ya que tienes que ser mas responsable con tus actos<\p>\
+        ",{
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-15);
+                system.setQuality("experiencia", character.qualities.experiencia+2);
+				system.setQuality("dinero", character.qualities.dinero-100);
+            }
+        }
+    ),
+	
+	
+		opcicon_2: new undum.SimpleSituation(
+        "<h1>No llevarlo al taller</h1>\
+        <p>Aunque el coche haga algun ruido raro a veces, Erre decide no llevarlo al taller\
+			ya que le supondría gastarse gran parte de sus ahorros y por ahora prefiere gastarselos de fiesta\
+			esa misma noche decide salir de fiesta con sus a amugos al pueblo de al lado y como él es el unico que tiene coche propio\
+			conduce el hasta allí. Despues de unas copas, a las 5 de la mañana deciden volver a su pueblo. \
+			nada mas salir de la calle de la discoteca de la un golpe al coche en una farola al subirse en la acera sin querer\
+			ahora tiene un problema muy grande ya que ahora la direccion ha terminado casi de romperse y está muy dura por no hablar del golpe\
+			que tiene el coche en la aleta derecha. Ahora tiene dos opciones <a href='opcion_grua'>llamar a la grua </a>\
+			o jugarsela e <a href='opcion_casa'>intentar ir a casa asi </a><\p>\
+        ",	
+        {
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-75);
+                system.setQuality("experiencia", character.qualities.experiencia+2);
+				system.setQuality("dinero", character.qualities.dinero);
+            }
+        }
+    ),
+	
+	opcion_grua: new undum.SimpleSituation(
+        "<h1>Llamar a la grua</h1>\
+		<img src='media/games/tutorial/grua.jpg' class='float_right'>\
+        <p> Llaman a la grua y despues de estar esperando casi 1h llega y van hacia su pueblo, dejan el coche en la puerta del taller donde\
+		estan sus padres esperandolo muy enfadados. Tras llegar a su casa sus padres le regañan por haber bebido alcohol y haber cogido\
+		el coche y lo castigan durante un mes <\p>\
+        ",	
+        {
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-25);
+                system.setQuality("experiencia", character.qualities.experiencia+1);
+				system.setQuality("dinero", character.qualities.dinero-1000);
+            }
+        }
+    ),
+	
+	opcion_casa: new undum.SimpleSituation(
+        "<h1>intentar ir a casa así</h1>\
+		<img src='media/games/tutorial/conducir.jpg' class='float_right'>\
+        <p>Deciden ir a casa con aunque el volante esté super duro pero no quiere que se enteren sus padres ya que lo castigarían mucho\
+		despues de ver que no es tan complicado conducir así Erre empieza a ir un poco mas deprisa pero no mucho ya que la direccion está durisima\
+		despues de unas curvas bastantes cerradas finalmente la direccion termina de romperse al 100% y queda bloqueada, Erre se da cuenta y empieza a frenar\
+		pero ya era un poco tarde y terminan chocando contra un árbol aunque fue a baja velocidad, ahora si su coche ha quedado destrozado y es imposible de arreglar\
+		sus padres lo castigarán durante mucho tiempoy se ha quedado sin coche y le debe dinero al taller<\p>\
+        ",	
+        {
+            enter: function(character, system, to) {
+                system.setQuality("responsable", character.qualities.responsable-25);
+                system.setQuality("experiencia", character.qualities.experiencia+1);
+				system.setQuality("dinero", character.qualities.dinero-1200);
+            }
+        }
+    ),
+	
+	
+	
+	
     situations: new undum.Situation({
         enter: function(character, system, from) {
             system.write($("#s_situations").html());
         },
         tags: ["topic"],
-        optionText: "What Undum Games are Made Of",
+        optionText: "Llevar el coche al taller y arreglarlo",
         displayOrder: 1
     }),
     todo: new undum.SimpleSituation(
@@ -446,23 +595,16 @@ undum.game.start = "start";
  * possess. We don't have to be exhaustive, but if we miss one out then
  * that quality will never show up in the character bar in the UI. */
 undum.game.qualities = {
-    skill: new undum.IntegerQuality(
-        "Skill", {priority:"0001", group:'stats'}
+    responsable: new undum.IntegerQuality(
+        "responsable", {priority:"0001", group:'stats'}
     ),
-    stamina: new undum.NumericQuality(
-        "Stamina", {priority:"0002", group:'stats'}
+    experiencia: new undum.NumericQuality(
+        "experiencia", {priority:"0002", group:'stats'}
     ),
-    luck: new undum.FudgeAdjectivesQuality( // Fudge as in the FUDGE RPG
-        "<span title='Skill, Stamina and Luck are reverently borrowed from the Fighting Fantasy series of gamebooks. The words representing Luck are from the FUDGE RPG. This tooltip is illustrating that you can use any HTML in the label for a quality (in this case a span containing a title attribute).'>Luck</span>",
-        {priority:"0003", group:'stats'}
+	dinero: new undum.NumericQuality(
+        "dinero", {priority:"0003", group:'stats'}
     ),
-
-    inspiration: new undum.NonZeroIntegerQuality(
-        "Inspiration", {priority:"0001", group:'progress'}
-    ),
-    novice: new undum.OnOffQuality(
-        "Novice", {priority:"0002", group:'progress', onDisplay:"&#10003;"}
-    )
+    
 };
 
 // ---------------------------------------------------------------------------
@@ -480,10 +622,8 @@ undum.game.qualityGroups = {
 /* This function gets run before the game begins. It is normally used
  * to configure the character at the start of play. */
 undum.game.init = function(character, system) {
-    character.qualities.skill = 12;
-    character.qualities.stamina = 12;
-    character.qualities.luck = 0;
-    character.qualities.novice = 1;
-    character.qualities.inspiration = 0;
-    system.setCharacterText("<p>You are starting on an exciting journey.</p>");
+    character.qualities.responsable = 100;
+    character.qualities.experiencia=0;
+    character.qualities.dinero = 1000;
+    
 };
